@@ -1,8 +1,18 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const {
+    body,
+    validationResult
+} = require('express-validator');
 
 exports.signup = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
@@ -23,6 +33,12 @@ exports.signup = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
     User.findOne({
             email: req.body.email
         })
