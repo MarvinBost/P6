@@ -13,7 +13,7 @@ const result = require('dotenv').config() // dotenv is used for the .env file, i
 
 app.use(helmet()) // use middleware of Helmet
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.usqcx.gcp.mongodb.net/test` //uri database
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.usqcx.gcp.mongodb.net/${process.env.DB_TABLE}` //uri database
 
 mongoose.connect(uri, {
         useNewUrlParser: true,
